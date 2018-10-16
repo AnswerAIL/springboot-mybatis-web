@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.answer.springboot.mybatis.web.dao.UserDao" >
+
+    <resultMap id="UserResultMap" type="User" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="TINYINT" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="User_Columns" >
+        id, user_name, sex, password, email, address, create_time, update_time
+    </sql>
+
+
+
+
+
+    <insert id="insertUser" parameterType="User">
+        insert into smw_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userName != null" >user_name,</if>
+            <if test="sex != null" >sex,</if>
+            <if test="password != null" >password,</if>
+            <if test="email != null" >email,</if>
+            <if test="address != null" >address,</if>
+            create_time, update_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userName != null" >#{userName},</if>
+            <if test="sex != null" >#{sex},</if>
+            <if test="password != null" >#{password},</if>
+            <if test="email != null" >#{email},</if>
+            <if test="address != null" >#{address},</if>
+            NOW(), NOW()
+        </trim>
+    </insert>
+
+
+    <delete id="deleteUser" parameterType="Long">
+        delete from smw_user where id = #{id}
+    </delete>
+
+
+    <update id="updateUser" parameterType="HashMap">
+        update smw_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            update_time = NOW()
+        </trim>
+        where id = #{id}
+    </update>
+
+
+    <select id="findUsers" parameterType="Long" resultType="User">
+        select <include refid="User_Columns" />
+        from smw_user
+    </select>
+
+</mapper>
