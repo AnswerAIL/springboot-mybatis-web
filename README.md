@@ -1,4 +1,4 @@
-# SpringBoot-Mybatis-Web
+# SpringBoot-MyBatis-Web
   - SpringBoot实现基础Web框架
 
 ### 新建项目步骤(以IDEA为例)
