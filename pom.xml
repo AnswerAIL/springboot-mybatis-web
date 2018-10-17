@@ -94,8 +94,9 @@
 					<!--该镜像的容器启动后, 直接运行spring boot工程 | 容器启动时执行的命令 -->
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<!--<volumes>
-						<volume></volume>
-					</volumes>-->
+						<volume>/home</volume>
+					</volumes>
+					-->
 					<!-- 设置环境变量 | 类似于DockerDile的ENV -->
 					<env>
 						<MYSQL_IP>119.23.XXX.XXX</MYSQL_IP>
