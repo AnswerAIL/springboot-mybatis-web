@@ -11,4 +11,10 @@
 ### 启动服务
 ```bash
     nohup java -jar springboot-mybatis-web-0.0.1-SNAPSHOT.jar >> smw.log 2>&1 &
-```          
+``` 
+         
+### 服务器构建项目镜像
+```bash
+    cd /root/answer/docker/springboot-mybatis-web
+    mvn package docker:build -Dmaven.test.skip=true -X
+```         
