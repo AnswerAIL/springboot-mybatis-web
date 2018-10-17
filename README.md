@@ -15,6 +15,10 @@
          
 ### 服务器构建项目镜像
 ```bash
+    # 进入项目目录
     cd /root/answer/docker/springboot-mybatis-web
+    # 编译 Docker 镜像
     mvn package docker:build -Dmaven.test.skip=true -X
+    # 启动一个容器实例
+    docker run -d -p 8088:8888 -v /root/answer/docker/data:/home --name smw IMAGE_ID
 ```         
