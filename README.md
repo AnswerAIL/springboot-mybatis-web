@@ -15,6 +15,8 @@
          
 ### 服务器构建项目镜像
 ```bash
+    # 在POM中声明构建信息: pom_pom.xml  使用Dockerfile: pom.xml + Dockerfile
+    
     # 进入项目目录
     cd /root/answer/docker/springboot-mybatis-web
     # 编译 Docker 镜像

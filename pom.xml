@@ -89,26 +89,8 @@
 						<imageTag>latest</imageTag>
 						<!--<imageTag>${project.version}</imageTag>-->
 					</imageTags>
-					<!-- 镜像的FROM, 使用java官方镜像 | 构建镜像时需要的基础镜像, 类似于DockerFile的From -->
-					<baseImage>java:8</baseImage>
-					<!--该镜像的容器启动后, 直接运行spring boot工程 | 容器启动时执行的命令 -->
-					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-					<!--<volumes>
-						<volume>/home</volume>
-					</volumes>
-					-->
-					<!-- 设置环境变量 | 类似于DockerDile的ENV -->
-					<env>
-						<MYSQL_IP>119.23.XXX.XXX</MYSQL_IP>
-						<MYSQL_PORT>3306</MYSQL_PORT>
-						<MYSQL_DB>answer</MYSQL_DB>
-						<MYSQL_UNAME>root</MYSQL_UNAME>
-						<MYSQL_PASSWD>123456</MYSQL_PASSWD>
-					</env>
-					<!-- 设定容器向外部暴露的端口 -->
-					<exposes>
-						<expose>8088</expose>
-					</exposes>
+					<!-- Dockerfile 文件所在的目录 -->
+					<dockerDirectory>src/main/docker</dockerDirectory>
 					<!-- 这里是复制 jar 包到 docker 容器指定目录配置, 相当于DockerFile的ADD -->
 					<resources>
 						<resource>
