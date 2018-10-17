@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.answer</groupId>
+	<artifactId>springboot-mybatis-web</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>springboot-mybatis-web</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.5.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Web for Jsp need start -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- Web for Jsp need end -->
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.4.2.RELEASE</version>
+			</plugin>
+
+
+
+			<!-- Docker Maven插件 -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<!-- Docker镜像相关的配置信息 -->
+				<configuration>
+					<!-- 镜像名, 这里用工程名 -->
+					<imageName>${project.artifactId}</imageName>
+					<!-- 镜像版本号, 可设置多个, 如果不是设为latest, 则会生成两个镜像, 即设置的版本号和latest -->
+					<imageTags>
+						<imageTag>latest</imageTag>
+						<!--<imageTag>${project.version}</imageTag>-->
+					</imageTags>
+					<!-- 镜像的FROM, 使用java官方镜像 | 构建镜像时需要的基础镜像, 类似于DockerFile的From -->
+					<baseImage>java:8</baseImage>
+					<!--该镜像的容器启动后, 直接运行spring boot工程 | 容器启动时执行的命令 -->
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<!--<volumes>
+						<volume>/home</volume>
+					</volumes>
+					-->
+					<!-- 设置环境变量 | 类似于DockerDile的ENV -->
+					<env>
+						<MYSQL_IP>119.23.XXX.XXX</MYSQL_IP>
+						<MYSQL_PORT>3306</MYSQL_PORT>
+						<MYSQL_DB>answer</MYSQL_DB>
+						<MYSQL_UNAME>root</MYSQL_UNAME>
+						<MYSQL_PASSWD>123456</MYSQL_PASSWD>
+					</env>
+					<!-- 设定容器向外部暴露的端口 -->
+					<exposes>
+						<expose>8088</expose>
+					</exposes>
+					<!-- 这里是复制 jar 包到 docker 容器指定目录配置, 相当于DockerFile的ADD -->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+
+
+
+		<!-- 解决打包时访问不了JSP问题 -->
+		<resources>
+			<!-- 打包时将jsp文件拷贝到META-INF目录下-->
+			<resource>
+				<!-- 指定resources插件处理哪个目录下的资源文件 -->
+				<directory>src/main/webapp</directory>
+				<!--注意此次必须要放在此目录下才能被访问到-->
+				<targetPath>META-INF/resources</targetPath>
+				<includes>
+					<include>**/**</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/**</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+
+
+</project>
