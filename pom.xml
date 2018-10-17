@@ -98,7 +98,7 @@
 					</volumes>-->
 					<!-- 设置环境变量 | 类似于DockerDile的ENV -->
 					<env>
-						<MYSQL_IP>119.23.106.146</MYSQL_IP>
+						<MYSQL_IP>119.23.XXX.XXX</MYSQL_IP>
 						<MYSQL_PORT>3306</MYSQL_PORT>
 						<MYSQL_DB>answer</MYSQL_DB>
 						<MYSQL_UNAME>root</MYSQL_UNAME>
