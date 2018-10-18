@@ -29,4 +29,4 @@
     # 7. 服务启动脚本
     start.sh
 ```
-`注意: 请先生成 springboot-mybatis-web 镜像`
+`注意: 启动项目前, 请先构建 springboot-mybatis-web 项目镜像`
