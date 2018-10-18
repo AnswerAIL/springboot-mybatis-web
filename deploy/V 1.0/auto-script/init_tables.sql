@@ -40,3 +40,4 @@ CREATE TABLE `smw_user` (
 -- ----------------------------
 INSERT INTO `smw_user` VALUES ('1', 'answer', '1', '123456', 'answer_ljm@163.com', 'sz', '2018-10-16 11:10:47', '2018-10-16 11:10:50');
 INSERT INTO `smw_user` VALUES ('2', 'admin', '1', '123456', 'admin@qq.com', 'sz', '2018-10-16 11:10:47', '2018-10-16 11:10:50');
+
