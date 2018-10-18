@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+
+  springboot.mybatis.mysql:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    hostname: smm
+    image: mysql:${MYSQL_IMAGE_VERSION}
+    environment:
+      - HOSTNAME=mysql
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    working_dir: /home/smm
+    # MySQL 在容器启动时会自动执行 /usr/local/bin/docker-entrypoint.sh 该脚本, 并自动执行 /docker-entrypoint-initdb.d 目录下的脚本
+#    command: /bin/bash -c './script.sh;'
+    volumes:
+      - ./data/mysql/datadir:/usr/data
+      - ./data/mysql/conf:/etc/mysql
+      - ./data/mysql/smm:/home/smm
+      - ./auto-script:/docker-entrypoint-initdb.d
+    ports:
+      - ${MYSQL_PORT}:3306
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
+
+
+  springboot.mybatis.web:
+    container_name: ${WEB_CONTAINER_NAME}
+    hostname: smw
+    image: springboot-mybatis-web:${WEB_IMAGE_VERSION}
+    environment: 
+      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_UNAME=${MYSQL_UNAME}
+      - MYSQL_PASSWD=${MYSQL_PASSWD}
+    working_dir: /home/smw
+    volumes:
+      - ./data/web/smw:/home/smw
+    ports:
+      - ${WEB_PORT}:8888
+    depends_on:
+      - springboot.mybatis.mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
