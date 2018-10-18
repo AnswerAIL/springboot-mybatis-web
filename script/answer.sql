@@ -15,6 +15,8 @@ Date: 2018-10-17 17:27:23
 
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE DATABASE IF NOT EXISTS answer default charset utf8 COLLATE utf8_general_ci;
+
 -- ----------------------------
 -- Table structure for `smw_user`
 -- ----------------------------
