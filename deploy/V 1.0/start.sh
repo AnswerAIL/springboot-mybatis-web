@@ -12,7 +12,7 @@ CONTAINER_MYSQL="springboot.mybatis.mysql"
 # 判断是否存在环境变量文件， 存在则读取
 if [ -f "./.env" ]; then
   info "读取环境变量配置信息..."
-  cat ./.env
+  source ./.env
 fi
 
 # 日志存放路径
