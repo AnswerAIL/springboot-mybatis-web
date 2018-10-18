@@ -10,8 +10,7 @@ CONTAINER_WEB="springboot.mybatis.web"
 CONTAINER_MYSQL="springboot.mybatis.mysql"
 
 # 判断是否存在环境变量文件， 存在则读取
-if [ -f "./.env" ]; then
-  info "读取环境变量配置信息..."
+if [ -e "./.env" ]; then
   source ./.env
 fi
 
