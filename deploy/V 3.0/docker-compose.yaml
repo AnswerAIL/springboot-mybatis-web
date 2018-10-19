@@ -1,0 +1,103 @@
+version: '2'
+
+services:
+  # MySQL 服务
+  springboot.mybatis.mysql:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    hostname: smm
+    image: mysql:${MYSQL_IMAGE_VERSION}
+    environment:
+      - HOSTNAME=mysql
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    working_dir: /home/smm
+    # MySQL 在容器启动时会自动执行 /usr/local/bin/docker-entrypoint.sh 该脚本, 并自动执行 /docker-entrypoint-initdb.d 目录下的脚本
+#    command: /bin/bash -c './script.sh;'
+    volumes:
+      - ./data/${MYSQL_CONTAINER_NAME}/datadir:/usr/data
+      - ./data/${MYSQL_CONTAINER_NAME}/conf:/etc/mysql
+      - ./data/${MYSQL_CONTAINER_NAME}/smm:/home/smm
+      - ./auto-script/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - ${MYSQL_PORT}:3306
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
+
+
+  # NGINX 服务
+  springboot.mybatis.nginx:
+    container_name: ${NGINX_CONTAINER_NAME}
+    hostname: smn
+    image: nginx:${NGINX_IMAGE_VERSION}
+    environment:
+      - HOSTNAME=nginx
+    working_dir: /home/nginx
+    volumes:
+      - ./data/${NGINX_CONTAINER_NAME}:/home/nginx
+      - ./auto-script/nginx/html/index.html:/usr/share/nginx/html/index.html:ro
+#      - ./auto-script/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./auto-script/nginx/nginx.conf:/etc/nginx/nginx.conf
+    expose:
+      - 80
+    ports:
+      - ${NGINX_PORT}:80
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
+
+
+  # 集群 WEB1
+  springboot.mybatis.web1:
+    container_name: ${WEB_CONTAINER_NAME1}
+    hostname: smw
+    image: springboot-mybatis-web:${WEB_IMAGE_VERSION}
+    environment: 
+      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_UNAME=${MYSQL_UNAME}
+      - MYSQL_PASSWD=${MYSQL_PASSWD}
+    working_dir: /home/smw
+    volumes:
+      - ./data/${WEB_CONTAINER_NAME1}:/home/smw
+    ports:
+      - ${WEB_PORT1}:8888
+    depends_on:
+      - springboot.mybatis.mysql
+      - springboot.mybatis.nginx
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
+
+  
+  # 集群 WEB2
+  springboot.mybatis.web2:
+    container_name: ${WEB_CONTAINER_NAME2}
+    hostname: smw
+    image: springboot-mybatis-web:${WEB_IMAGE_VERSION}
+    environment:
+      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_UNAME=${MYSQL_UNAME}
+      - MYSQL_PASSWD=${MYSQL_PASSWD}
+    working_dir: /home/smw
+    volumes:
+      - ./data/${WEB_CONTAINER_NAME2}:/home/smw
+    ports:
+      - ${WEB_PORT2}:8888
+    depends_on:
+      - springboot.mybatis.mysql
+      - springboot.mybatis.nginx
+      - springboot.mybatis.web1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200M"
+        max-file: "5"
