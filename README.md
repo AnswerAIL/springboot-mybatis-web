@@ -12,7 +12,9 @@
 ```bash
     nohup java -jar springboot-mybatis-web-0.0.1-SNAPSHOT.jar >> smw.log 2>&1 &
 ``` 
-         
+
+&nbsp;
+    
 ### 服务器构建项目镜像
 ```bash
     # 在POM中声明构建信息: pom_pom.xml  使用Dockerfile: pom.xml + Dockerfile
@@ -24,3 +26,8 @@
     # 启动一个容器实例
     docker run -d -p 8088:8888 -v /root/answer/docker/data:/home --name smw IMAGE_ID
 ```         
+
+&nbsp;
+
+### 请简单粗暴地支持我
+<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
