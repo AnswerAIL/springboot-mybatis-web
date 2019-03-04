@@ -26,15 +26,3 @@
     # 启动一个容器实例
     docker run -d -p 8088:8888 -v /root/answer/docker/data:/home --name smw IMAGE_ID
 ```         
-
-&nbsp;
-
-***
-### 如果觉得该项目对你有帮助， 请随意打赏， 谢谢支持
-##### [微信](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)
-<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
-
-&nbsp;
-
-##### [支付宝](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png)
-<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png"  height="230" width="240">
