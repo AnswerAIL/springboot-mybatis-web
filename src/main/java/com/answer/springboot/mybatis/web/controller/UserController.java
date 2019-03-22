@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -29,10 +31,16 @@ public class UserController {
     @RequestMapping("index")
     public String index(Model model) {
         logger.info("enter index.jsp.");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS");
+
         User user = new User();
-        user.setUserName("answerCoder");
+        user.setUserName("answerCoder" + LocalDateTime.now().format(dateTimeFormatter));
+        user.setSex(1);
+        user.setAddress("pt");
+        user.setEmail("answer_ljm@163.com");
         model.addAttribute("user", user);
         model.addAttribute("age", "7");
+        userService.insertUser(user);
         return "index";
     }
 

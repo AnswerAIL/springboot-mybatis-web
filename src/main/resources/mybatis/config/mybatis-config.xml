@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <!-- org.apache.ibatis.session.Configuration -->
     <!-- 具体参见: http://www.mybatis.org/mybatis-3/zh/configuration.html -->
     <settings>
         <setting name="callSettersOnNulls" value="true"/>
@@ -22,6 +23,7 @@
 
 
 
+    <!-- org.apache.ibatis.type.TypeAliasRegistry -->
     <!-- 类型别名是为Java类型设置一个短的名字. 它只和 XML 配置有关, 存在的意义仅在于用来减少类完全限定名的冗余 -->
     <typeAliases>
         <typeAlias alias="Integer" type="java.lang.Integer" />
