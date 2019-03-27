@@ -3,6 +3,7 @@ package com.answer.springboot.mybatis.web.service;
 import com.answer.springboot.mybatis.web.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by L.Answer on 2018-10-16 10:27
@@ -15,6 +16,6 @@ public interface IUserService {
 
     int updateUser(User user);
 
-    List<User> findUsers();
+    List<User> findUsers(Map params);
 
 }

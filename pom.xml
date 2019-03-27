@@ -21,6 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<commons.lang.version>3.1</commons.lang.version>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -64,6 +65,11 @@
 		</dependency>
 		<!-- Web for Jsp need end -->
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
